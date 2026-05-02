@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Gift, Heart, Home, Sparkles, Ticket, Wallet } from "lucide-react";
+import { Gift, Home, Ticket, Wallet } from "lucide-react";
 
 const gifts = [
   {
@@ -7,12 +7,6 @@ const gifts = [
     title: "Itens da Casa",
     desc: "Ajude Lavinia e Mateus a montarem o novo lar com carinho.",
     value: "A partir de R$ 150",
-  },
-  {
-    icon: Heart,
-    title: "Experiência do Casal",
-    desc: "Contribua para momentos especiais, passeios e memórias a dois.",
-    value: "A partir de R$ 200",
   },
   {
     icon: Wallet,
@@ -23,7 +17,7 @@ const gifts = [
   {
     icon: Ticket,
     title: "Dinâmica do Casal",
-    desc: "Participe da dinâmica online preparada para celebrar essa fase.",
+    desc: "Participe da dinâmica preparada para celebrar essa fase.",
     value: "Online",
   },
 ];
@@ -46,7 +40,7 @@ const GiftSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {gifts.map((gift, i) => {
             const Icon = gift.icon;
             return (
@@ -73,24 +67,6 @@ const GiftSection = () => {
         </div>
 
         <motion.div
-          id="dinamica"
-          className="wedding-card text-center max-w-2xl mx-auto mb-10"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <Sparkles className="w-7 h-7 text-gold mx-auto mb-4" />
-          <h3 className="font-serif text-2xl font-light text-foreground mb-3">Contribua com a Dinâmica do Casal Online</h3>
-          <p className="text-sm font-sans text-muted-foreground leading-relaxed mb-6">
-            Um espaço para participar da experiência preparada para os noivos. A contribuição pode ser feita por PIX, mantendo a proposta simples, prática e carinhosa.
-          </p>
-          <a href="#pix" className="wedding-btn-outline inline-block text-xs">
-            Contribuir por PIX
-          </a>
-        </motion.div>
-
-        <motion.div
           id="pix"
           className="wedding-card text-center max-w-md mx-auto"
           initial={{ opacity: 0, y: 20 }}
@@ -104,7 +80,7 @@ const GiftSection = () => {
             <span className="text-xs text-muted-foreground font-sans">QR Code PIX</span>
           </div>
           <p className="text-sm font-sans text-muted-foreground mb-2">Chave PIX:</p>
-          <p className="text-sm font-sans text-foreground font-medium break-words">casamento@laviniaaemateus.com</p>
+          <p className="text-sm font-sans text-foreground font-medium break-words">(A DEFINIR)</p>
         </motion.div>
       </div>
     </section>

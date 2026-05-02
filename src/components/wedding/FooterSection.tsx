@@ -27,7 +27,7 @@ const FooterSection = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
             <a href="#presentes" className="wedding-btn">Lista de Presentes</a>
-            <a href="#dinamica" className="wedding-btn-outline">Dinâmica Online</a>
+            <a href="#dinamica" className="wedding-btn-outline">Participe da Dinâmica do Casal</a>
             <button onClick={handleShare} className="wedding-btn-outline inline-flex items-center gap-2 justify-center">
               <Share2 className="w-4 h-4" /> Compartilhar
             </button>
@@ -35,6 +35,9 @@ const FooterSection = () => {
 
           <p className="mt-12 text-xs font-sans uppercase text-muted-foreground">
             Lavinia & Mateus - 2026
+          </p>
+          <p className="mt-12 text-xs font-sans uppercase text-muted-foreground">
+            site desenvolvido por Emerson Bayonetta
           </p>
         </motion.div>
       </div>
