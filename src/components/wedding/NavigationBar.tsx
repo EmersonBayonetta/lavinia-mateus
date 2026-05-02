@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const links = [
   { href: "#historia", label: "Nossa História" },
-  { href: "#evento", label: "Evento" },
-  { href: "#rsvp", label: "RSVP" },
+  { href: "#evento", label: "O Grande Dia" },
   { href: "#presentes", label: "Presentes" },
   { href: "#galeria", label: "Galeria" },
   { href: "#mensagens", label: "Mensagens" },
@@ -16,69 +15,96 @@ const NavigationBar = () => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 80);
-    window.addEventListener("scroll", handler);
-    return () => window.removeEventListener("scroll", handler);
+    const handleScroll = () => setScrolled(window.scrollY > 32);
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.classList.toggle("menu-open", open);
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+
+    const handleResize = () => {
+      if (window.matchMedia("(min-width: 768px)").matches) setOpen(false);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      document.body.classList.remove("menu-open");
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [open]);
+
+  const isSolid = scrolled || open;
+
   return (
-    <motion.nav
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
-        scrolled ? "py-3 backdrop-blur-md" : "py-5"
-      }`}
-      style={{
-        background: scrolled ? "hsl(var(--background) / 0.9)" : "transparent",
-        borderBottom: scrolled ? "1px solid hsl(var(--gold-light) / 0.2)" : "none",
-      }}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8, delay: 0.5 }}
-    >
-      <div className="wedding-container flex items-center justify-between">
-        <a href="#" className="font-serif text-lg tracking-wide text-foreground">
-          L <span className="text-gold">&</span> M
+    <nav className={`wedding-nav ${isSolid ? "wedding-nav-solid" : "wedding-nav-hero"}`}>
+      <AnimatePresence>
+        {open && (
+          <motion.button
+            type="button"
+            className="wedding-mobile-overlay"
+            aria-label="Fechar navegação"
+            onClick={() => setOpen(false)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.24, ease: "easeOut" }}
+          />
+        )}
+      </AnimatePresence>
+
+      <div className="wedding-nav-inner">
+        <a href="#inicio" className="wedding-brand" aria-label="Voltar ao início" onClick={() => setOpen(false)}>
+          L <span>&</span> M
         </a>
 
-        {/* Desktop */}
-        <div className="hidden md:flex gap-8">
+        <div className="wedding-nav-links">
           {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-xs font-sans tracking-[0.15em] uppercase text-muted-foreground hover:text-gold transition-colors duration-300"
-            >
+            <a key={link.href} href={link.href}>
               {link.label}
             </a>
           ))}
         </div>
 
-        {/* Mobile toggle */}
-        <button className="md:hidden text-foreground" onClick={() => setOpen(!open)}>
+        <button
+          type="button"
+          className="wedding-menu-button"
+          onClick={() => setOpen((current) => !current)}
+          aria-label={open ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={open}
+          aria-controls="mobile-navigation"
+        >
           {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
-      {/* Mobile menu */}
-      {open && (
-        <motion.div
-          className="md:hidden py-6 px-4"
-          style={{ background: "hsl(var(--background) / 0.98)" }}
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="block py-3 text-sm font-sans tracking-widest uppercase text-muted-foreground hover:text-gold transition-colors text-center"
-            >
-              {link.label}
-            </a>
-          ))}
-        </motion.div>
-      )}
-    </motion.nav>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="mobile-navigation"
+            className="wedding-mobile-menu"
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.26, ease: "easeOut" }}
+          >
+            {links.map((link) => (
+              <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
+                {link.label}
+              </a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
   );
 };
 

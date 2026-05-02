@@ -3,10 +3,10 @@ import { Heart, Share2 } from "lucide-react";
 
 const FooterSection = () => {
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
-  const shareText = "Você está convidado para o casamento de Lavinia e Mateus! 💍";
+  const shareText = "Você está convidado para o casamento de Lavinia e Mateus!";
 
   const handleShare = () => {
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareText + " " + shareUrl)}`;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`;
     window.open(whatsappUrl, "_blank");
   };
 
@@ -26,15 +26,15 @@ const FooterSection = () => {
           <div className="wedding-divider" />
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-            <a href="#rsvp" className="wedding-btn">Confirmar Presença</a>
-            <a href="#presentes" className="wedding-btn-outline">Lista de Presentes</a>
+            <a href="#presentes" className="wedding-btn">Lista de Presentes</a>
+            <a href="#dinamica" className="wedding-btn-outline">Dinâmica Online</a>
             <button onClick={handleShare} className="wedding-btn-outline inline-flex items-center gap-2 justify-center">
               <Share2 className="w-4 h-4" /> Compartilhar
             </button>
           </div>
 
-          <p className="mt-12 text-xs font-sans tracking-widest uppercase text-muted-foreground">
-            Lavinia & Mateus — 2026
+          <p className="mt-12 text-xs font-sans uppercase text-muted-foreground">
+            Lavinia & Mateus - 2026
           </p>
         </motion.div>
       </div>

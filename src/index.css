@@ -6,23 +6,23 @@
 
 @layer base {
   :root {
-    --background: 40 25% 97%;
-    --foreground: 30 15% 18%;
+    --background: 18 45% 98%;
+    --foreground: 25 22% 20%;
 
-    --card: 40 30% 96%;
-    --card-foreground: 30 15% 18%;
+    --card: 18 48% 97%;
+    --card-foreground: 25 22% 20%;
 
-    --popover: 40 25% 97%;
-    --popover-foreground: 30 15% 18%;
+    --popover: 18 45% 98%;
+    --popover-foreground: 25 22% 20%;
 
-    --primary: 40 45% 62%;
-    --primary-foreground: 40 25% 97%;
+    --primary: 350 38% 70%;
+    --primary-foreground: 18 45% 98%;
 
-    --secondary: 36 30% 88%;
-    --secondary-foreground: 30 15% 25%;
+    --secondary: 14 48% 91%;
+    --secondary-foreground: 25 22% 24%;
 
-    --muted: 40 20% 93%;
-    --muted-foreground: 30 10% 45%;
+    --muted: 18 38% 93%;
+    --muted-foreground: 25 12% 43%;
 
     --accent: 90 18% 42%;
     --accent-foreground: 40 25% 97%;
@@ -30,20 +30,25 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 36 25% 87%;
-    --input: 36 25% 87%;
-    --ring: 40 45% 62%;
+    --border: 350 28% 88%;
+    --input: 350 28% 88%;
+    --ring: 350 38% 70%;
 
     --radius: 0.5rem;
 
-    --champagne: 36 40% 88%;
-    --gold: 40 50% 65%;
-    --gold-light: 40 55% 80%;
+    --champagne: 35 46% 90%;
+    --gold: 36 42% 58%;
+    --gold-light: 36 50% 82%;
     --olive: 90 20% 40%;
     --olive-light: 90 15% 70%;
-    --rose: 350 30% 85%;
-    --rose-deep: 350 25% 70%;
-    --cream: 40 30% 95%;
+    --rose: 350 45% 89%;
+    --rose-deep: 350 38% 68%;
+    --cream: 18 45% 96%;
+
+    --hero-ink: 36 42% 96%;
+    --hero-ink-muted: 36 30% 86%;
+    --hero-glass: 20 24% 12%;
+    --hero-accent: 350 46% 76%;
 
     --font-serif: 'Cormorant Garamond', Georgia, serif;
     --font-sans: 'Montserrat', system-ui, sans-serif;
@@ -67,6 +72,13 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
+    background:
+      linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--rose) / 0.24) 48%, hsl(var(--background)) 100%);
+  }
+
+  body.menu-open {
+    overflow: hidden;
+    touch-action: none;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -85,7 +97,7 @@
 
   .wedding-title {
     font-family: var(--font-serif);
-    @apply text-3xl md:text-5xl font-light tracking-wide;
+    @apply text-3xl md:text-5xl font-light;
     color: hsl(var(--foreground));
   }
 
@@ -102,36 +114,39 @@
 
   .wedding-card {
     @apply rounded-lg p-6 md:p-8 border;
-    background: hsl(var(--card));
-    border-color: hsl(var(--gold-light) / 0.3);
-    box-shadow: 0 4px 20px hsl(var(--gold) / 0.08);
+    background: hsl(var(--card) / 0.82);
+    border-color: hsl(var(--rose-deep) / 0.22);
+    box-shadow: 0 18px 45px hsl(var(--rose-deep) / 0.12);
+    backdrop-filter: blur(10px);
   }
 
   .wedding-btn {
     font-family: var(--font-sans);
-    @apply px-8 py-3 rounded-full text-sm font-medium tracking-widest uppercase transition-all duration-500;
-    background: hsl(var(--gold));
+    @apply inline-flex min-h-11 items-center justify-center rounded-full px-5 py-3 text-center text-sm font-medium uppercase transition-all duration-500;
+    background: hsl(var(--rose-deep));
     color: hsl(var(--primary-foreground));
-    letter-spacing: 0.15em;
+    letter-spacing: 0;
+    line-height: 1.2;
   }
 
   .wedding-btn:hover {
-    background: hsl(var(--gold) / 0.85);
+    background: hsl(var(--rose-deep) / 0.86);
     transform: translateY(-1px);
-    box-shadow: 0 8px 25px hsl(var(--gold) / 0.25);
+    box-shadow: 0 8px 25px hsl(var(--rose-deep) / 0.22);
   }
 
   .wedding-btn-outline {
     font-family: var(--font-sans);
-    @apply px-8 py-3 rounded-full text-sm font-medium tracking-widest uppercase transition-all duration-500 border;
-    background: transparent;
-    color: hsl(var(--gold));
-    border-color: hsl(var(--gold));
-    letter-spacing: 0.15em;
+    @apply inline-flex min-h-11 items-center justify-center rounded-full border px-5 py-3 text-center text-sm font-medium uppercase transition-all duration-500;
+    background: hsl(var(--background) / 0.55);
+    color: hsl(var(--rose-deep));
+    border-color: hsl(var(--rose-deep));
+    letter-spacing: 0;
+    line-height: 1.2;
   }
 
   .wedding-btn-outline:hover {
-    background: hsl(var(--gold) / 0.08);
+    background: hsl(var(--rose) / 0.42);
   }
 
   .wedding-input {
@@ -144,15 +159,308 @@
 
   .wedding-input:focus {
     outline: none;
-    border-color: hsl(var(--gold));
-    box-shadow: 0 0 0 3px hsl(var(--gold) / 0.1);
+    border-color: hsl(var(--rose-deep));
+    box-shadow: 0 0 0 3px hsl(var(--rose-deep) / 0.1);
   }
 
   .gold-gradient-text {
-    background: linear-gradient(135deg, hsl(var(--gold)), hsl(var(--rose-deep)), hsl(var(--gold)));
+    background: linear-gradient(135deg, hsl(var(--gold)), hsl(var(--rose-deep)), hsl(var(--foreground)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  .wedding-nav {
+    @apply fixed left-0 right-0 top-0 z-50 transition-all duration-500;
+    color: hsl(var(--hero-ink));
+  }
+
+  .wedding-nav-hero {
+    @apply py-4;
+  }
+
+  .wedding-nav-solid {
+    @apply py-3;
+    color: hsl(var(--foreground));
+    background: hsl(var(--background) / 0.76);
+    border-bottom: 1px solid hsl(var(--rose-deep) / 0.18);
+    box-shadow: 0 18px 36px hsl(var(--foreground) / 0.08);
+    backdrop-filter: blur(18px);
+  }
+
+  .wedding-nav-inner {
+    @apply relative z-20 mx-auto flex w-full max-w-6xl items-center justify-between px-4 sm:px-6;
+  }
+
+  .wedding-brand {
+    @apply inline-flex h-11 min-w-24 items-center justify-center rounded-full px-4 font-serif text-xl font-light transition-all duration-300;
+    color: currentColor;
+    background: hsl(var(--hero-glass) / 0.24);
+    border: 1px solid hsl(var(--hero-ink) / 0.22);
+    box-shadow: 0 18px 44px hsl(0 0% 0% / 0.16);
+    backdrop-filter: blur(18px);
+  }
+
+  .wedding-nav-solid .wedding-brand {
+    background: hsl(var(--background) / 0.78);
+    border-color: hsl(var(--rose-deep) / 0.22);
+  }
+
+  .wedding-brand span {
+    @apply mx-2;
+    color: hsl(var(--gold-light));
+  }
+
+  .wedding-nav-solid .wedding-brand span {
+    color: hsl(var(--gold));
+  }
+
+  .wedding-nav-links {
+    @apply hidden items-center gap-7 md:flex lg:gap-9;
+  }
+
+  .wedding-nav-links a {
+    @apply text-xs font-medium uppercase transition-all duration-300;
+    color: currentColor;
+    opacity: 0.84;
+  }
+
+  .wedding-nav-links a:hover {
+    opacity: 1;
+    color: hsl(var(--gold-light));
+  }
+
+  .wedding-nav-solid .wedding-nav-links a:hover {
+    color: hsl(var(--rose-deep));
+  }
+
+  .wedding-menu-button {
+    @apply flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 md:hidden;
+    color: currentColor;
+    background: hsl(var(--hero-glass) / 0.24);
+    border: 1px solid hsl(var(--hero-ink) / 0.22);
+    backdrop-filter: blur(18px);
+  }
+
+  .wedding-menu-button:hover {
+    background: hsl(var(--hero-ink) / 0.12);
+  }
+
+  .wedding-nav-solid .wedding-menu-button {
+    background: hsl(var(--background) / 0.78);
+    border-color: hsl(var(--rose-deep) / 0.22);
+  }
+
+  .wedding-mobile-overlay {
+    @apply fixed inset-0 z-0 cursor-default border-0 p-0 md:hidden;
+    min-height: 100svh;
+    background:
+      radial-gradient(circle at 50% 0%, hsl(var(--rose-deep) / 0.14), transparent 42%),
+      hsl(0 0% 0% / 0.46);
+    backdrop-filter: blur(4px);
+  }
+
+  .wedding-mobile-menu {
+    @apply relative z-20 mx-4 mt-4 rounded-lg px-4 py-4 text-center md:hidden;
+    max-height: calc(100svh - 6.75rem);
+    overflow-y: auto;
+    background: hsl(var(--background) / 0.92);
+    border: 1px solid hsl(var(--rose-deep) / 0.2);
+    box-shadow: 0 26px 70px hsl(0 0% 0% / 0.22);
+    backdrop-filter: blur(18px);
+  }
+
+  .wedding-mobile-menu a {
+    @apply block rounded-md py-3 text-sm font-medium uppercase text-muted-foreground transition-all duration-300;
+  }
+
+  .wedding-mobile-menu a:hover {
+    background: hsl(var(--rose) / 0.32);
+    color: hsl(var(--rose-deep));
+  }
+
+  .hero-section {
+    @apply relative isolate flex min-h-[100svh] items-center justify-center overflow-hidden px-4 text-center sm:px-6;
+    color: hsl(var(--hero-ink));
+  }
+
+  .hero-media {
+    @apply absolute inset-0 -z-10;
+  }
+
+  .hero-image {
+    @apply h-full w-full object-cover;
+    object-position: 50% 38%;
+  }
+
+  .hero-overlay {
+    @apply absolute inset-0;
+    background:
+      radial-gradient(circle at 50% 34%, transparent 0%, hsl(0 0% 0% / 0.08) 42%, hsl(0 0% 0% / 0.26) 100%),
+      linear-gradient(to bottom, hsl(0 0% 0% / 0.48) 0%, hsl(0 0% 0% / 0.24) 42%, hsl(0 0% 0% / 0.46) 100%);
+  }
+
+  .hero-content {
+    @apply mx-auto flex w-full max-w-4xl flex-col items-center pb-12 pt-28 sm:pb-14 md:pt-32;
+  }
+
+  .hero-kicker {
+    @apply font-sans text-xs font-medium uppercase text-balance sm:text-sm;
+    color: hsl(var(--hero-ink-muted));
+  }
+
+  .hero-title {
+    @apply mt-5 flex flex-col items-center font-serif font-light;
+    color: hsl(var(--hero-ink));
+    font-size: clamp(3.75rem, 12.5vw, 7.5rem);
+    line-height: 0.86;
+    letter-spacing: 0.01em;
+    text-shadow: 0 2px 12px hsl(0 0% 0% / 0.5), 0 18px 62px hsl(0 0% 0% / 0.42);
+  }
+
+  .hero-ampersand {
+    @apply my-3 font-serif italic;
+    color: hsl(var(--hero-accent));
+    font-size: clamp(1.8rem, 5vw, 3.6rem);
+    line-height: 1;
+  }
+
+  .hero-copy {
+    @apply mt-6 max-w-2xl text-balance font-sans text-base font-light leading-relaxed sm:text-lg;
+    color: hsl(var(--hero-ink-muted));
+    text-shadow: 0 2px 10px hsl(0 0% 0% / 0.52), 0 8px 28px hsl(0 0% 0% / 0.36);
+  }
+
+  .hero-countdown-wrap {
+    @apply mt-8 w-full sm:mt-10;
+  }
+
+  .hero-countdown {
+    @apply mx-auto grid w-full max-w-[36rem] grid-cols-4 overflow-hidden rounded-full;
+    background: hsl(var(--hero-glass) / 0.24);
+    border: 1px solid hsl(var(--hero-ink) / 0.18);
+    box-shadow: 0 24px 70px hsl(0 0% 0% / 0.16);
+    backdrop-filter: blur(18px);
+  }
+
+  .hero-countdown-item {
+    @apply min-w-0 px-2 py-3 text-center sm:px-4 sm:py-4;
+  }
+
+  .hero-countdown-item + .hero-countdown-item {
+    border-left: 1px solid hsl(var(--hero-ink) / 0.12);
+  }
+
+  .hero-countdown-value {
+    @apply font-serif font-light;
+    color: hsl(var(--hero-ink));
+    font-size: clamp(1.8rem, 6vw, 3.25rem);
+    line-height: 0.95;
+  }
+
+  .hero-countdown-label {
+    @apply mt-1 truncate font-sans text-[0.62rem] font-medium uppercase sm:text-xs;
+    color: hsl(var(--hero-ink-muted));
+  }
+
+  .hero-actions {
+    @apply mt-8 grid w-full max-w-xl grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4 md:mt-10;
+  }
+
+  .hero-button {
+    @apply inline-flex min-h-12 w-full items-center justify-center rounded-full px-5 py-3 text-center text-sm font-semibold uppercase transition-all duration-300;
+    line-height: 1.2;
+    backdrop-filter: blur(14px);
+  }
+
+  .hero-button:hover {
+    transform: translateY(-2px) scale(1.015);
+  }
+
+  .hero-button-primary {
+    color: hsl(var(--foreground));
+    background: hsl(var(--hero-ink) / 0.92);
+    box-shadow: 0 18px 40px hsl(0 0% 0% / 0.18);
+  }
+
+  .hero-button-primary:hover {
+    background: hsl(var(--hero-ink));
+  }
+
+  .hero-button-secondary {
+    color: hsl(var(--hero-ink));
+    background: hsl(var(--hero-glass) / 0.18);
+    border: 1px solid hsl(var(--hero-ink) / 0.38);
+  }
+
+  .hero-button-secondary:hover {
+    background: hsl(var(--hero-ink) / 0.16);
+    border-color: hsl(var(--hero-ink) / 0.58);
+  }
+
+  @media (max-width: 520px) {
+    .hero-section {
+      @apply items-end;
+    }
+
+    .hero-image {
+      object-position: 50% 32%;
+    }
+
+    .hero-content {
+      @apply pb-6 pt-28;
+    }
+
+    .hero-kicker {
+      @apply hidden;
+    }
+
+    .hero-title {
+      font-size: clamp(2.95rem, 14vw, 4.1rem);
+      line-height: 0.9;
+    }
+
+    .hero-ampersand {
+      @apply my-2;
+    }
+
+    .hero-copy {
+      @apply mt-4 text-sm leading-relaxed;
+    }
+
+    .hero-countdown-wrap {
+      @apply mt-5;
+    }
+
+    .hero-countdown {
+      @apply rounded-2xl;
+    }
+
+    .hero-countdown-item {
+      @apply px-1.5 py-2.5;
+    }
+
+    .hero-countdown-value {
+      font-size: clamp(1.45rem, 8vw, 2rem);
+    }
+
+    .hero-countdown-label {
+      @apply text-[0.58rem];
+    }
+
+    .hero-actions {
+      @apply mt-4 gap-2;
+    }
+
+    .hero-button {
+      @apply min-h-10 text-[0.78rem];
+    }
+  }
+
+  .cinema-band {
+    background:
+      linear-gradient(90deg, hsl(var(--foreground) / 0.05) 0 1px, transparent 1px) 0 0 / 38px 100%,
+      linear-gradient(180deg, hsl(var(--cream)), hsl(var(--rose) / 0.42));
   }
 }
 

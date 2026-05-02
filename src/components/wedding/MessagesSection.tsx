@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Send, Quote } from "lucide-react";
+import { Quote, Send } from "lucide-react";
 
 interface Message {
   name: string;
@@ -44,7 +44,6 @@ const MessagesSection = () => {
           <p className="wedding-subtitle">Deixe suas palavras de carinho</p>
         </motion.div>
 
-        {/* Form */}
         <motion.form
           onSubmit={handleSubmit}
           className="wedding-card mb-12 max-w-xl mx-auto"
@@ -54,7 +53,7 @@ const MessagesSection = () => {
         >
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-sans tracking-widest uppercase text-muted-foreground mb-2">
+              <label className="block text-xs font-sans uppercase text-muted-foreground mb-2">
                 Seu nome
               </label>
               <input
@@ -66,7 +65,7 @@ const MessagesSection = () => {
               />
             </div>
             <div>
-              <label className="block text-xs font-sans tracking-widest uppercase text-muted-foreground mb-2">
+              <label className="block text-xs font-sans uppercase text-muted-foreground mb-2">
                 Sua mensagem
               </label>
               <textarea
@@ -86,12 +85,11 @@ const MessagesSection = () => {
           </div>
         </motion.form>
 
-        {/* Messages Grid */}
         {messages.length > 0 && (
           <div className="grid sm:grid-cols-2 gap-4">
             {messages.map((msg, i) => (
               <motion.div
-                key={i}
+                key={`${msg.createdAt}-${i}`}
                 className="wedding-card relative"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -99,7 +97,7 @@ const MessagesSection = () => {
               >
                 <Quote className="w-5 h-5 text-gold/30 absolute top-4 right-4" />
                 <p className="text-sm font-sans text-foreground leading-relaxed mb-3 italic">"{msg.message}"</p>
-                <p className="text-xs font-sans text-gold tracking-wide">— {msg.name}</p>
+                <p className="text-xs font-sans text-gold">- {msg.name}</p>
               </motion.div>
             ))}
           </div>

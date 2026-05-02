@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const WEDDING_DATE = new Date("2026-10-12T16:00:00");
+const WEDDING_DATE = new Date("2026-07-25T16:00:00");
 
 interface TimeLeft {
   dias: number;
@@ -32,13 +32,13 @@ const CountdownTimer = () => {
   const units = Object.entries(timeLeft) as [string, number][];
 
   return (
-    <div className="flex gap-4 md:gap-8 justify-center">
+    <div className="hero-countdown" aria-label="Contagem regressiva para o casamento">
       {units.map(([label, value]) => (
-        <div key={label} className="text-center">
-          <div className="font-serif text-3xl md:text-5xl font-light gold-gradient-text">
+        <div key={label} className="hero-countdown-item">
+          <div className="hero-countdown-value">
             {String(value).padStart(2, "0")}
           </div>
-          <div className="text-xs md:text-sm font-sans tracking-widest uppercase mt-1 text-muted-foreground">
+          <div className="hero-countdown-label">
             {label}
           </div>
         </div>

@@ -1,90 +1,82 @@
 import { motion } from "framer-motion";
 import CountdownTimer from "./CountdownTimer";
-import heroImg from "@/assets/hero-wedding.jpg";
+import heroImg from "@/assets/Fundo.jpeg";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0">
+    <section
+      id="inicio"
+      aria-labelledby="hero-title"
+      className="hero-section"
+    >
+      <div className="hero-media" aria-hidden="true">
         <img
           src={heroImg}
-          alt="Casamento Lavinia e Mateus"
-          className="w-full h-full object-cover"
+          alt=""
+          className="hero-image"
+          loading="eager"
+          decoding="async"
         />
-        <div className="absolute inset-0" style={{
-          background: "linear-gradient(to bottom, hsl(var(--background) / 0.3) 0%, hsl(var(--background) / 0.7) 50%, hsl(var(--background) / 0.95) 100%)"
-        }} />
+        <div className="hero-overlay" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
+      <div className="hero-content">
+        <motion.p
+          className="hero-kicker"
+          initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          transition={{ duration: 0.85, ease: "easeOut" }}
         >
-          <p className="font-sans text-xs md:text-sm tracking-[0.3em] uppercase text-muted-foreground mb-6">
-            Convidamos você para celebrar
-          </p>
-        </motion.div>
+          Celebração de casamento
+        </motion.p>
 
         <motion.h1
-          className="font-serif text-5xl md:text-8xl font-light leading-tight"
-          initial={{ opacity: 0, y: 40 }}
+          id="hero-title"
+          className="hero-title"
+          initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.4, delay: 0.3, ease: "easeOut" }}
+          transition={{ duration: 1, delay: 0.16, ease: "easeOut" }}
         >
-          <span className="block gold-gradient-text">Lavinia Bayonetta</span>
-          <span className="block text-2xl md:text-4xl my-3 text-muted-foreground font-serif italic">&</span>
-          <span className="block gold-gradient-text">Mateus Marcelino</span>
+          <span>Lavinia</span>
+          <span className="hero-ampersand">&</span>
+          <span>Mateus</span>
         </motion.h1>
 
-        <motion.div
-          className="wedding-divider mt-8"
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-        />
-
         <motion.p
-          className="wedding-subtitle mt-6 max-w-xl mx-auto text-balance"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.2 }}
+          className="hero-copy"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.85, delay: 0.32, ease: "easeOut" }}
         >
-          "Duas histórias escritas separadamente, agora unidas em um único capítulo para sempre."
+          Duas histórias, um novo capítulo e a promessa de uma vida inteira juntos.
         </motion.p>
 
         <motion.div
-          className="mt-12"
-          initial={{ opacity: 0, y: 20 }}
+          className="hero-countdown-wrap"
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.6 }}
+          transition={{ duration: 0.8, delay: 0.48, ease: "easeOut" }}
         >
           <CountdownTimer />
         </motion.div>
 
         <motion.div
-          className="mt-12 flex flex-col sm:flex-row gap-4 justify-center"
-          initial={{ opacity: 0, y: 20 }}
+          className="hero-actions"
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 2 }}
+          transition={{ duration: 0.8, delay: 0.64, ease: "easeOut" }}
         >
-          <a href="#rsvp" className="wedding-btn">Confirmar Presença</a>
-          <a href="#evento" className="wedding-btn-outline">Ver Detalhes</a>
-          <a href="#presentes" className="wedding-btn-outline">Lista de Presentes</a>
+          <a href="#evento" className="hero-button hero-button-primary">
+            O Grande Dia
+          </a>
+          <a href="#presentes" className="hero-button hero-button-secondary">
+            Presentes
+          </a>
+          <a href="#dinamica" className="hero-button hero-button-secondary">
+            Dinâmica
+          </a>
         </motion.div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        <div className="w-px h-12 bg-gradient-to-b from-transparent via-gold to-transparent" />
-      </motion.div>
     </section>
   );
 };
