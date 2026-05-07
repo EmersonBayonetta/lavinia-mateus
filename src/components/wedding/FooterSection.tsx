@@ -36,9 +36,6 @@ const FooterSection = () => {
           <p className="mt-12 text-xs font-sans uppercase text-muted-foreground">
             Lavinia & Mateus - 2026
           </p>
-          <p className="mt-12 text-xs font-sans uppercase text-muted-foreground">
-            site desenvolvido por Emerson Bayonetta
-          </p>
         </motion.div>
       </div>
     </footer>
