@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Church, Clock, MapPin, Shirt } from "lucide-react";
+import { CalendarHeart, Gem, Landmark, MapPinned } from "lucide-react";
 
 const EventSection = () => {
   return (
@@ -25,20 +25,20 @@ const EventSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <Church className="w-8 h-8 text-gold mx-auto mb-4" />
+            <Landmark className="w-8 h-8 text-gold mx-auto mb-4" />
             <h3 className="font-serif text-2xl font-light text-foreground mb-4">Cerimônia</h3>
             <div className="space-y-3 text-sm font-sans text-muted-foreground">
               <p className="flex items-center justify-center gap-2">
-                <Clock className="w-4 h-4 text-gold" />
-                12 de outubro de 2026 - 16h00
+                <CalendarHeart className="w-4 h-4 text-gold" />
+                25 de Julho de 2026 - 16h00
               </p>
               <p className="flex items-center justify-center gap-2">
-                <MapPin className="w-4 h-4 text-gold" />
+                <MapPinned className="w-4 h-4 text-gold" />
                 Igreja Matriz - Centro
               </p>
             </div>
             <a
-              href="https://maps.google.com"
+              href="https://maps.app.goo.gl/pAVtJjt8S5RRfuBD9"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-6 wedding-btn-outline text-xs"
@@ -54,7 +54,7 @@ const EventSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }}
           >
-            <Shirt className="w-8 h-8 text-gold mx-auto mb-4" />
+            <Gem className="w-8 h-8 text-gold mx-auto mb-4" />
             <h3 className="font-serif text-2xl font-light text-foreground mb-4">Dress Code</h3>
             <p className="text-sm font-sans text-muted-foreground leading-relaxed">
               Traje social em tons claros, suaves e elegantes. Sugerimos rosé, nude, champagne, verde sálvia e neutros delicados. Evite branco, off-white e cores muito próximas ao vestido da noiva.

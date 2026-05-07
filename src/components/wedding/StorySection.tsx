@@ -1,33 +1,33 @@
 import { motion } from "framer-motion";
-import { Church, Coffee, Heart, Sparkles, Star } from "lucide-react";
+import { Clapperboard, Gem, HandHeart, Images, Landmark } from "lucide-react";
 
 const milestones = [
   {
-    icon: Coffee,
+    icon: Clapperboard,
     title: "O encontro",
     desc: "Entre conversas leves, olhares atentos e aquele jeito bonito de reconhecer paz em alguém, a história de Lavinia e Mateus começou a ganhar forma.",
     date: "Primeira cena",
   },
   {
-    icon: Heart,
+    icon: HandHeart,
     title: "O começo do amor",
     desc: "O que nasceu simples se tornou cuidado diário. Eles descobriram que amar também é escolher caminhar junto nas pequenas decisões.",
     date: "O roteiro muda",
   },
   {
-    icon: Star,
+    icon: Images,
     title: "Construindo memórias",
     desc: "Vieram viagens, planos, risadas, desafios e conquistas. Cada capítulo aproximou ainda mais os dois do sonho de formar uma família.",
     date: "Cenas favoritas",
   },
   {
-    icon: Sparkles,
+    icon: Gem,
     title: "O sim",
     desc: "O pedido marcou a promessa de uma vida compartilhada: amor, fé, parceria e a certeza de que o melhor ainda está por vir.",
     date: "Clímax",
   },
   {
-    icon: Church,
+    icon: Landmark,
     title: "Até o altar",
     desc: "Agora, Lavinia e Mateus se preparam para celebrar esse amor ao lado das pessoas que fazem parte dessa jornada.",
     date: "O grande dia",

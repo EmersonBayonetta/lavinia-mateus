@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Quote, Send } from "lucide-react";
+import { MessageCircleHeart, SendHorizontal } from "lucide-react";
 
 interface Message {
   name: string;
@@ -79,7 +79,7 @@ const MessagesSection = () => {
             </div>
             <div className="text-center">
               <button type="submit" className="wedding-btn inline-flex items-center gap-2">
-                <Send className="w-4 h-4" /> Enviar Mensagem
+                <SendHorizontal className="w-4 h-4" /> Enviar Mensagem
               </button>
             </div>
           </div>
@@ -95,7 +95,7 @@ const MessagesSection = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.05 }}
               >
-                <Quote className="w-5 h-5 text-gold/30 absolute top-4 right-4" />
+                <MessageCircleHeart className="w-5 h-5 text-gold/30 absolute top-4 right-4" />
                 <p className="text-sm font-sans text-foreground leading-relaxed mb-3 italic">"{msg.message}"</p>
                 <p className="text-xs font-sans text-gold">- {msg.name}</p>
               </motion.div>

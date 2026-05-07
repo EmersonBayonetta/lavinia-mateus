@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Heart, Share2 } from "lucide-react";
+import { HeartHandshake, PartyPopper } from "lucide-react";
 
 const FooterSection = () => {
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
@@ -19,7 +19,7 @@ const FooterSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <Heart className="w-6 h-6 text-gold mx-auto mb-6" />
+          <HeartHandshake className="w-6 h-6 text-gold mx-auto mb-6" />
           <h2 className="font-serif text-2xl md:text-3xl font-light text-foreground mb-4">
             Estamos ansiosos para compartilhar esse momento inesquecível com você.
           </h2>
@@ -29,7 +29,7 @@ const FooterSection = () => {
             <a href="#presentes" className="wedding-btn">Lista de Presentes</a>
             <a href="#dinamica" className="wedding-btn-outline">Participe da Dinâmica do Casal</a>
             <button onClick={handleShare} className="wedding-btn-outline inline-flex items-center gap-2 justify-center">
-              <Share2 className="w-4 h-4" /> Compartilhar
+              <PartyPopper className="w-4 h-4" /> Compartilhar
             </button>
           </div>
 

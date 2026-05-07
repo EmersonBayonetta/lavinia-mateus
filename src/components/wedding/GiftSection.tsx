@@ -1,21 +1,21 @@
 import { motion } from "framer-motion";
-import { Gift, Home, Ticket, Wallet } from "lucide-react";
+import { HandCoins, HousePlus, QrCode, TicketCheck } from "lucide-react";
 
 const gifts = [
   {
-    icon: Home,
+    icon: HousePlus,
     title: "Itens da Casa",
     desc: "Ajude Lavinia e Mateus a montarem o novo lar com carinho.",
     value: "A partir de R$ 150",
   },
   {
-    icon: Wallet,
+    icon: HandCoins,
     title: "Contribuição Livre",
     desc: "Escolha o valor que fizer sentido para presentear os noivos.",
     value: "Valor livre",
   },
   {
-    icon: Ticket,
+    icon: TicketCheck,
     title: "Dinâmica do Casal",
     desc: "Participe da dinâmica preparada para celebrar essa fase.",
     value: "Online",
@@ -74,7 +74,7 @@ const GiftSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <Gift className="w-7 h-7 text-gold mx-auto mb-4" />
+          <QrCode className="w-7 h-7 text-gold mx-auto mb-4" />
           <h3 className="font-serif text-xl font-light text-foreground mb-4">Contribuição via PIX</h3>
           <div className="w-32 h-32 bg-muted rounded-lg mx-auto mb-4 flex items-center justify-center">
             <span className="text-xs text-muted-foreground font-sans">QR Code PIX</span>
