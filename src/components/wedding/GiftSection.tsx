@@ -125,8 +125,7 @@ const GiftSection = () => {
           </div>
           <p className="text-sm font-sans text-muted-foreground mb-2">Chave PIX:</p>
           <p className="text-sm font-sans text-foreground font-medium break-words">{pixKey}</p>
-          <p className="text-sm font-sans text-muted-foreground mt-4 mb-2">Pix copia e cola:</p>
-          <p className="text-xs font-sans text-foreground font-medium break-words">{pixCopiaeCola}</p>
+ 
         </motion.div>
       </div>
     </section>

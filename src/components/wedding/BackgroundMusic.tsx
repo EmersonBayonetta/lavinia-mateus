@@ -1,38 +1,37 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type MouseEvent,
+  type PointerEvent,
+  type TouchEvent,
+} from "react";
 import { Music2, Volume2, VolumeX } from "lucide-react";
-import musicSrc from "@/music/WhatsApp Audio 2026-05-17 at 11.22.38.mpeg?url";
+
+const musicSrc = "/wedding-music.mp3";
 
 const BackgroundMusic = () => {
   const [playing, setPlaying] = useState(false);
   const [autoplayBlocked, setAutoplayBlocked] = useState(false);
-  const [mutedAutoplay, setMutedAutoplay] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const lastToggleRef = useRef(0);
 
-  const playMusic = useCallback(async (allowMutedFallback = false) => {
+  const playMusic = useCallback(async () => {
     const audio = audioRef.current;
 
     if (!audio) return false;
 
     audio.muted = false;
     audio.volume = 0.35;
+    audio.playsInline = true;
 
     try {
       await audio.play();
       setAutoplayBlocked(false);
-      setMutedAutoplay(false);
       return true;
     } catch {
-      if (allowMutedFallback) {
-        try {
-          audio.muted = true;
-          await audio.play();
-          setPlaying(true);
-          setMutedAutoplay(true);
-        } catch {
-          setMutedAutoplay(false);
-        }
-      }
-
       setAutoplayBlocked(true);
       return false;
     }
@@ -44,22 +43,17 @@ const BackgroundMusic = () => {
     if (!audio) return;
 
     audio.volume = 0.35;
+    audio.muted = false;
+    audio.playsInline = true;
     audio.load();
 
     const handlePlay = () => setPlaying(true);
-    const handlePause = () => {
-      setPlaying(false);
-      setMutedAutoplay(false);
-    };
-    const handleVolumeChange = () => {
-      setMutedAutoplay(!audio.paused && audio.muted);
-    };
+    const handlePause = () => setPlaying(false);
 
     audio.addEventListener("play", handlePlay);
     audio.addEventListener("pause", handlePause);
-    audio.addEventListener("volumechange", handleVolumeChange);
 
-    void playMusic(true);
+    void playMusic();
 
     const unlockMusic = (event: Event) => {
       const target = event.target;
@@ -79,7 +73,6 @@ const BackgroundMusic = () => {
     return () => {
       audio.removeEventListener("play", handlePlay);
       audio.removeEventListener("pause", handlePause);
-      audio.removeEventListener("volumechange", handleVolumeChange);
       window.removeEventListener("pointerdown", unlockMusic, unlockOptions);
       window.removeEventListener("touchstart", unlockMusic, unlockOptions);
       window.removeEventListener("scroll", unlockMusic, unlockOptions);
@@ -92,36 +85,62 @@ const BackgroundMusic = () => {
 
     if (!audio) return;
 
-    if (!audio.paused && (audio.muted || mutedAutoplay)) {
-      audio.muted = false;
-      audio.volume = 0.35;
-      setMutedAutoplay(false);
-      setAutoplayBlocked(false);
-      await audio.play();
-      return;
-    }
-
     if (!audio.paused) {
       audio.pause();
       setPlaying(false);
-      setMutedAutoplay(false);
       return;
     }
 
     await playMusic();
   };
 
-  const needsAction = (autoplayBlocked && !playing) || mutedAutoplay;
-  const iconPlaying = playing && !mutedAutoplay;
+  const runUserToggle = () => {
+    const now = window.Date.now();
+
+    if (now - lastToggleRef.current < 450) return;
+
+    lastToggleRef.current = now;
+    void toggleMusic();
+  };
+
+  const handlePointerDown = (event: PointerEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    runUserToggle();
+  };
+
+  const handleTouchEnd = (event: TouchEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    runUserToggle();
+  };
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    runUserToggle();
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+
+    event.preventDefault();
+    void toggleMusic();
+  };
+
+  const needsAction = autoplayBlocked && !playing;
+  const iconPlaying = playing;
   const buttonLabel = needsAction ? "Aperte o play e entre no clima" : "Musica";
 
   return (
     <>
-      <audio ref={audioRef} src={musicSrc} autoPlay loop preload="auto" playsInline />
+      <audio ref={audioRef} autoPlay loop preload="auto" playsInline>
+        <source src={musicSrc} type="audio/mpeg" />
+      </audio>
       <button
         type="button"
         className={`music-control ${needsAction ? "music-control-attention" : ""}`}
-        onClick={toggleMusic}
+        onPointerDown={handlePointerDown}
+        onTouchEnd={handleTouchEnd}
+        onClick={handleClick}
+        onKeyDown={handleKeyDown}
         aria-pressed={playing}
         aria-label={playing ? "Pausar musica de fundo" : "Tocar musica de fundo"}
       >
