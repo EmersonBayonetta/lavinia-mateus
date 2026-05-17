@@ -5,9 +5,10 @@ import musicSrc from "@/music/WhatsApp Audio 2026-05-17 at 11.22.38.mpeg?url";
 const BackgroundMusic = () => {
   const [playing, setPlaying] = useState(false);
   const [autoplayBlocked, setAutoplayBlocked] = useState(false);
+  const [mutedAutoplay, setMutedAutoplay] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const playMusic = useCallback(async () => {
+  const playMusic = useCallback(async (allowMutedFallback = false) => {
     const audio = audioRef.current;
 
     if (!audio) return false;
@@ -18,8 +19,24 @@ const BackgroundMusic = () => {
     try {
       await audio.play();
       setAutoplayBlocked(false);
+      setMutedAutoplay(false);
       return true;
     } catch {
+      if (allowMutedFallback) {
+        try {
+          audio.muted = true;
+          await audio.play();
+          setMutedAutoplay(true);
+
+          window.setTimeout(() => {
+            audio.muted = false;
+            setMutedAutoplay(audio.muted);
+          }, 700);
+        } catch {
+          setMutedAutoplay(false);
+        }
+      }
+
       setAutoplayBlocked(true);
       return false;
     }
@@ -33,12 +50,19 @@ const BackgroundMusic = () => {
     audio.volume = 0.35;
 
     const handlePlay = () => setPlaying(true);
-    const handlePause = () => setPlaying(false);
+    const handlePause = () => {
+      setPlaying(false);
+      setMutedAutoplay(false);
+    };
+    const handleVolumeChange = () => {
+      setMutedAutoplay(!audio.paused && audio.muted);
+    };
 
     audio.addEventListener("play", handlePlay);
     audio.addEventListener("pause", handlePause);
+    audio.addEventListener("volumechange", handleVolumeChange);
 
-    void playMusic();
+    void playMusic(true);
 
     const unlockMusic = () => {
       void playMusic();
@@ -54,6 +78,7 @@ const BackgroundMusic = () => {
     return () => {
       audio.removeEventListener("play", handlePlay);
       audio.removeEventListener("pause", handlePause);
+      audio.removeEventListener("volumechange", handleVolumeChange);
       window.removeEventListener("pointerdown", unlockMusic, unlockOptions);
       window.removeEventListener("touchstart", unlockMusic, unlockOptions);
       window.removeEventListener("scroll", unlockMusic, unlockOptions);
@@ -69,13 +94,16 @@ const BackgroundMusic = () => {
     if (playing) {
       audio.pause();
       setPlaying(false);
+      setMutedAutoplay(false);
       return;
     }
 
     await playMusic();
   };
 
-  const needsAction = autoplayBlocked && !playing;
+  const needsAction = (autoplayBlocked && !playing) || mutedAutoplay;
+  const iconPlaying = playing && !mutedAutoplay;
+  const buttonLabel = needsAction ? "Aperte o play e entre no clima" : "Musica";
 
   return (
     <>
@@ -88,11 +116,11 @@ const BackgroundMusic = () => {
         aria-label={playing ? "Pausar musica de fundo" : "Tocar musica de fundo"}
       >
         <span className="music-control-icon" aria-hidden="true">
-          {playing ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
+          {iconPlaying ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
         </span>
-        <span className="music-control-text">
+        <span className="music-control-copy">
           <Music2 className="h-3.5 w-3.5" aria-hidden="true" />
-          {needsAction ? "Tocar musica" : "Musica"}
+          <span className="music-control-text">{buttonLabel}</span>
         </span>
       </button>
     </>

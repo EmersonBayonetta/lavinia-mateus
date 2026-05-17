@@ -470,7 +470,7 @@
   }
 
   .music-control {
-    @apply fixed z-40 inline-flex min-h-11 items-center gap-2 rounded-full px-3 py-2 text-xs font-medium uppercase transition-all duration-300;
+    @apply fixed z-40 inline-flex min-h-11 max-w-[calc(100vw-2rem)] items-center gap-2 rounded-full px-3 py-2 text-xs font-medium uppercase transition-all duration-300;
     right: max(1rem, env(safe-area-inset-right));
     bottom: max(1rem, env(safe-area-inset-bottom));
     color: hsl(var(--foreground));
@@ -491,16 +491,23 @@
     background: hsl(var(--rose-deep));
   }
 
-  .music-control-text {
+  .music-control-copy {
     @apply hidden items-center gap-1.5 sm:inline-flex;
+  }
+
+  .music-control-text {
+    @apply truncate;
   }
 
   .music-control-attention {
     animation: music-attention 1.6s ease-in-out infinite;
+    background: hsl(var(--background) / 0.94);
+    border-color: hsl(var(--rose-deep) / 0.42);
   }
 
-  .music-control-attention .music-control-text {
+  .music-control-attention .music-control-copy {
     @apply inline-flex;
+    min-width: 0;
   }
 
   .menu-open .music-control {
@@ -536,13 +543,17 @@
     }
 
     .music-control {
-      @apply min-h-12;
+      @apply min-h-12 text-[0.68rem];
     }
 
     .music-control-attention {
       left: max(1rem, env(safe-area-inset-left));
       right: max(1rem, env(safe-area-inset-right));
       justify-content: center;
+    }
+
+    .music-control-attention .music-control-copy {
+      max-width: calc(100vw - 6.5rem);
     }
   }
 }
