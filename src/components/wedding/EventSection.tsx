@@ -60,7 +60,10 @@ const EventSection = () => {
             <Gem className="w-8 h-8 text-gold mx-auto mb-4" />
             <h3 className="font-serif text-2xl font-light text-foreground mb-4">Dress Code</h3>
             <p className="text-sm font-sans text-muted-foreground leading-relaxed">
-              Traje social em tons claros, suaves e elegantes. Sugerimos rosé, nude, champagne, verde sálvia e neutros delicados. Evite branco, off-white e cores muito próximas ao vestido da noiva.
+              Traje social em tons claros, suaves e elegantes. Sugerimos rosé, lavanda, verde sálvia, nude, champagne, areia, pêssego suave e neutros delicados, criando uma paleta harmoniosa e sofisticada para o nosso casamento.
+            </p>
+            <p className="mt-4 text-sm font-sans text-muted-foreground leading-relaxed">
+              Evite branco, off-white e cores muito próximas ao vestido da noiva, além de tons muito vibrantes ou neon.
             </p>
           </motion.div>
         </div>

@@ -26,12 +26,8 @@ const BackgroundMusic = () => {
         try {
           audio.muted = true;
           await audio.play();
+          setPlaying(true);
           setMutedAutoplay(true);
-
-          window.setTimeout(() => {
-            audio.muted = false;
-            setMutedAutoplay(audio.muted);
-          }, 700);
         } catch {
           setMutedAutoplay(false);
         }
@@ -48,6 +44,7 @@ const BackgroundMusic = () => {
     if (!audio) return;
 
     audio.volume = 0.35;
+    audio.load();
 
     const handlePlay = () => setPlaying(true);
     const handlePause = () => {
@@ -64,7 +61,11 @@ const BackgroundMusic = () => {
 
     void playMusic(true);
 
-    const unlockMusic = () => {
+    const unlockMusic = (event: Event) => {
+      const target = event.target;
+
+      if (target instanceof Element && target.closest(".music-control")) return;
+
       void playMusic();
     };
 
@@ -91,7 +92,16 @@ const BackgroundMusic = () => {
 
     if (!audio) return;
 
-    if (playing) {
+    if (!audio.paused && (audio.muted || mutedAutoplay)) {
+      audio.muted = false;
+      audio.volume = 0.35;
+      setMutedAutoplay(false);
+      setAutoplayBlocked(false);
+      await audio.play();
+      return;
+    }
+
+    if (!audio.paused) {
       audio.pause();
       setPlaying(false);
       setMutedAutoplay(false);
@@ -107,7 +117,7 @@ const BackgroundMusic = () => {
 
   return (
     <>
-      <audio ref={audioRef} src={musicSrc} autoPlay loop preload="auto" />
+      <audio ref={audioRef} src={musicSrc} autoPlay loop preload="auto" playsInline />
       <button
         type="button"
         className={`music-control ${needsAction ? "music-control-attention" : ""}`}
