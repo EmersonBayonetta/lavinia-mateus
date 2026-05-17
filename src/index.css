@@ -65,12 +65,17 @@
 }
 
 @layer base {
+  html {
+    overflow-x: hidden;
+  }
+
   * {
     @apply border-border;
   }
 
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
     font-family: var(--font-sans);
     background:
       linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--rose) / 0.24) 48%, hsl(var(--background)) 100%);
@@ -176,11 +181,13 @@
   }
 
   .wedding-nav-hero {
-    @apply py-4;
+    padding-top: max(0.75rem, env(safe-area-inset-top));
+    padding-bottom: 0.75rem;
   }
 
   .wedding-nav-solid {
-    @apply py-3;
+    padding-top: max(0.65rem, env(safe-area-inset-top));
+    padding-bottom: 0.65rem;
     color: hsl(var(--foreground));
     background: hsl(var(--background) / 0.76);
     border-bottom: 1px solid hsl(var(--rose-deep) / 0.18);
@@ -190,6 +197,7 @@
 
   .wedding-nav-inner {
     @apply relative z-20 mx-auto flex w-full max-w-6xl items-center justify-between px-4 sm:px-6;
+    min-height: 2.75rem;
   }
 
   .wedding-brand {
@@ -235,7 +243,7 @@
   }
 
   .wedding-menu-button {
-    @apply flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 md:hidden;
+    @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-all duration-300 md:hidden;
     color: currentColor;
     background: hsl(var(--hero-glass) / 0.24);
     border: 1px solid hsl(var(--hero-ink) / 0.22);
@@ -462,7 +470,9 @@
   }
 
   .music-control {
-    @apply fixed bottom-4 right-4 z-50 inline-flex min-h-11 items-center gap-2 rounded-full px-3 py-2 text-xs font-medium uppercase transition-all duration-300 sm:bottom-5 sm:right-5;
+    @apply fixed z-40 inline-flex min-h-11 items-center gap-2 rounded-full px-3 py-2 text-xs font-medium uppercase transition-all duration-300;
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
     color: hsl(var(--foreground));
     background: hsl(var(--background) / 0.84);
     border: 1px solid hsl(var(--rose-deep) / 0.24);
@@ -484,11 +494,72 @@
   .music-control-text {
     @apply hidden items-center gap-1.5 sm:inline-flex;
   }
+
+  .music-control-attention {
+    animation: music-attention 1.6s ease-in-out infinite;
+  }
+
+  .music-control-attention .music-control-text {
+    @apply inline-flex;
+  }
+
+  .menu-open .music-control {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0.75rem);
+  }
+
+  @media (min-width: 640px) {
+    .wedding-nav-hero {
+      padding-top: max(1rem, env(safe-area-inset-top));
+      padding-bottom: 1rem;
+    }
+
+    .wedding-nav-solid {
+      padding-top: max(0.75rem, env(safe-area-inset-top));
+      padding-bottom: 0.75rem;
+    }
+
+    .music-control {
+      right: max(1.25rem, env(safe-area-inset-right));
+      bottom: max(1.25rem, env(safe-area-inset-bottom));
+    }
+  }
+
+  @media (max-width: 520px) {
+    .wedding-nav-inner {
+      @apply px-3;
+    }
+
+    .wedding-brand {
+      @apply h-10 min-w-20 px-3 text-lg;
+    }
+
+    .music-control {
+      @apply min-h-12;
+    }
+
+    .music-control-attention {
+      left: max(1rem, env(safe-area-inset-left));
+      right: max(1rem, env(safe-area-inset-right));
+      justify-content: center;
+    }
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@keyframes music-attention {
+  0%, 100% {
+    box-shadow: 0 16px 38px hsl(var(--foreground) / 0.12);
+  }
+
+  50% {
+    box-shadow: 0 18px 42px hsl(var(--rose-deep) / 0.28);
   }
 }
 
