@@ -7,12 +7,14 @@ import GallerySection from "@/components/wedding/GallerySection";
 import MessagesSection from "@/components/wedding/MessagesSection";
 import FooterSection from "@/components/wedding/FooterSection";
 import FloralParticles from "@/components/wedding/FloralParticles";
+import BackgroundMusic from "@/components/wedding/BackgroundMusic";
 
 const Index = () => {
   return (
     <div className="relative">
       <FloralParticles />
       <NavigationBar />
+      <BackgroundMusic />
       <HeroSection />
       <StorySection />
       <EventSection />

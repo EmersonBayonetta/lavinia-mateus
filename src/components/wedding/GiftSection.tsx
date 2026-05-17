@@ -1,28 +1,50 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { HandCoins, HousePlus, QrCode, TicketCheck } from "lucide-react";
+import { ExternalLink, HandCoins, HousePlus, QrCode, TicketCheck } from "lucide-react";
+
+const giftListUrl = "https://listas.casasbahia.com.br/LAVINIAEMATEUS";
+const pixKey = "32999128353";
+const pixCopiaeCola = "00020126360014br.gov.bcb.pix0114+55329991283535204000053039865802BR5925MATEUS MARCELINO RODRIGUE6009Sao Paulo62290525REC6A09D0EBBF1FD7570320176304B77D";
 
 const gifts = [
   {
     icon: HousePlus,
     title: "Itens da Casa",
     desc: "Ajude Lavinia e Mateus a montarem o novo lar com carinho.",
-    value: "A partir de R$ 150",
+    value: "",
+    action: "list",
   },
   {
     icon: HandCoins,
     title: "Contribuição Livre",
     desc: "Escolha o valor que fizer sentido para presentear os noivos.",
-    value: "Valor livre",
+    value: "",
+    action: "pix",
   },
   {
     icon: TicketCheck,
     title: "Dinâmica do Casal",
     desc: "Participe da dinâmica preparada para celebrar essa fase.",
-    value: "Online",
+    value: "",
+    action: "list",
   },
 ];
 
 const GiftSection = () => {
+  const [pixCopied, setPixCopied] = useState(false);
+
+  const handlePixClick = async () => {
+    try {
+      await navigator.clipboard.writeText(pixCopiaeCola);
+      setPixCopied(true);
+      window.setTimeout(() => setPixCopied(false), 2200);
+    } catch {
+      setPixCopied(false);
+    }
+
+    document.getElementById("pix")?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
   return (
     <section id="presentes" className="wedding-section">
       <div className="wedding-container">
@@ -58,9 +80,26 @@ const GiftSection = () => {
                 <h3 className="font-serif text-xl font-light text-foreground mb-2">{gift.title}</h3>
                 <p className="text-sm font-sans text-muted-foreground mb-4">{gift.desc}</p>
                 <span className="text-xs font-sans uppercase text-gold">{gift.value}</span>
-                <div className="mt-5">
-                  <button className="wedding-btn text-xs px-6 py-2">Presentear</button>
-                </div>
+                {gift.action === "pix" ? (
+                  <button
+                    type="button"
+                    className="wedding-btn mt-5 gap-2 text-xs px-6 py-2"
+                    onClick={handlePixClick}
+                  >
+                    {pixCopied ? "Pix copiado" : "Contribuir via PIX"}
+                    <QrCode className="h-3.5 w-3.5" />
+                  </button>
+                ) : (
+                  <a
+                    href={giftListUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="wedding-btn mt-5 gap-2 text-xs px-6 py-2"
+                  >
+                    Presentear
+                    <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                )}
               </motion.div>
             );
           })}
@@ -76,11 +115,18 @@ const GiftSection = () => {
         >
           <QrCode className="w-7 h-7 text-gold mx-auto mb-4" />
           <h3 className="font-serif text-xl font-light text-foreground mb-4">Contribuição via PIX</h3>
-          <div className="w-32 h-32 bg-muted rounded-lg mx-auto mb-4 flex items-center justify-center">
-            <span className="text-xs text-muted-foreground font-sans">QR Code PIX</span>
+          <div className="w-40 h-40 bg-white rounded-lg mx-auto mb-4 flex items-center justify-center p-3 shadow-sm">
+            <img
+              src="/pix-copia-e-cola-qrcode.svg"
+              alt="QR Code para pagamento via PIX"
+              className="h-full w-full"
+              loading="lazy"
+            />
           </div>
           <p className="text-sm font-sans text-muted-foreground mb-2">Chave PIX:</p>
-          <p className="text-sm font-sans text-foreground font-medium break-words">(A DEFINIR)</p>
+          <p className="text-sm font-sans text-foreground font-medium break-words">{pixKey}</p>
+          <p className="text-sm font-sans text-muted-foreground mt-4 mb-2">Pix copia e cola:</p>
+          <p className="text-xs font-sans text-foreground font-medium break-words">{pixCopiaeCola}</p>
         </motion.div>
       </div>
     </section>

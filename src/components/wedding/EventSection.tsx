@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 import { CalendarHeart, Gem, Landmark, MapPinned } from "lucide-react";
 
+const ceremonyAddress = "Rua Francisco Chaves Campos, 17 - Pampulha";
+const ceremonyMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ceremonyAddress)}`;
+
 const EventSection = () => {
   return (
     <section id="evento" className="wedding-section cinema-band">
@@ -34,11 +37,11 @@ const EventSection = () => {
               </p>
               <p className="flex items-center justify-center gap-2">
                 <MapPinned className="w-4 h-4 text-gold" />
-                Igreja Matriz - Centro
+                {ceremonyAddress}
               </p>
             </div>
             <a
-              href="https://maps.app.goo.gl/pAVtJjt8S5RRfuBD9"
+              href={ceremonyMapUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-6 wedding-btn-outline text-xs"
