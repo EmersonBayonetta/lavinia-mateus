@@ -1,32 +1,62 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MessageCircleHeart, SendHorizontal } from "lucide-react";
-
-interface Message {
-  name: string;
-  message: string;
-  createdAt: string;
-}
+import {
+  createWeddingMessage,
+  hasSharedMessageStore,
+  listWeddingMessages,
+  type WeddingMessage,
+} from "@/lib/weddingMessages";
 
 const MessagesSection = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<WeddingMessage[]>([]);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("wedding-messages") || "[]");
-    setMessages(stored);
+    let active = true;
+
+    const loadMessages = async () => {
+      try {
+        const stored = await listWeddingMessages();
+        if (active) setMessages(stored);
+      } catch {
+        if (active) setError("Nao foi possivel carregar as mensagens agora.");
+      } finally {
+        if (active) setLoading(false);
+      }
+    };
+
+    void loadMessages();
+
+    return () => {
+      active = false;
+    };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !message.trim()) return;
-    const newMsg: Message = { name: name.trim(), message: message.trim(), createdAt: new Date().toISOString() };
-    const updated = [newMsg, ...messages];
-    setMessages(updated);
-    localStorage.setItem("wedding-messages", JSON.stringify(updated));
-    setName("");
-    setMessage("");
+
+    setError("");
+    setSending(true);
+
+    try {
+      const newMsg = await createWeddingMessage({
+        name: name.trim(),
+        message: message.trim(),
+      });
+      setMessages((current) => [newMsg, ...current]);
+      setName("");
+      setMessage("");
+    } catch {
+      setError("Nao foi possivel enviar a mensagem. Tente novamente em instantes.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -78,18 +108,34 @@ const MessagesSection = () => {
               />
             </div>
             <div className="text-center">
-              <button type="submit" className="wedding-btn inline-flex items-center gap-2">
-                <SendHorizontal className="w-4 h-4" /> Enviar Mensagem
+              <button type="submit" className="wedding-btn inline-flex items-center gap-2" disabled={sending}>
+                <SendHorizontal className="w-4 h-4" /> {sending ? "Enviando..." : "Enviar Mensagem"}
               </button>
             </div>
+            {error && (
+              <p className="text-center text-xs font-sans text-muted-foreground">
+                {error}
+              </p>
+            )}
+            {!hasSharedMessageStore && (
+              <p className="text-center text-[0.68rem] font-sans text-muted-foreground/70">
+                Ambiente local: as mensagens ficam salvas apenas neste navegador.
+              </p>
+            )}
           </div>
         </motion.form>
 
-        {messages.length > 0 && (
+        {loading && (
+          <p className="text-center text-sm font-sans text-muted-foreground">
+            Carregando mensagens...
+          </p>
+        )}
+
+        {!loading && messages.length > 0 && (
           <div className="message-grid">
             {messages.map((msg, i) => (
               <motion.div
-                key={`${msg.createdAt}-${i}`}
+                key={msg.id}
                 className="wedding-card message-note"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
