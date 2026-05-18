@@ -58,16 +58,21 @@ const StorySection = () => {
 
           {milestones.map((m, i) => {
             const Icon = m.icon;
-            const isLeft = i % 2 === 0;
             return (
               <motion.div
                 key={m.title}
-                className={`story-milestone ${isLeft ? "story-milestone-left" : "story-milestone-right"}`}
-                initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                className="story-milestone"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: i * 0.1 }}
               >
+                <div className="story-icon-wrap">
+                  <div className="story-icon">
+                    <Icon className="w-5 h-5 text-gold" />
+                  </div>
+                </div>
+
                 <div className="story-copy">
                   <span className="text-xs uppercase text-gold font-sans">{m.date}</span>
                   <h3 className="font-serif text-2xl md:text-3xl font-light mt-2 text-foreground">{m.title}</h3>
@@ -75,14 +80,6 @@ const StorySection = () => {
                     {m.desc}
                   </p>
                 </div>
-
-                <div className="story-icon-wrap">
-                  <div className="story-icon">
-                    <Icon className="w-5 h-5 text-gold" />
-                  </div>
-                </div>
-
-                <div className="story-breath" />
               </motion.div>
             );
           })}
