@@ -62,13 +62,13 @@ const GiftSection = () => {
           </p>
         </motion.div>
 
-        <div className="gift-grid">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {gifts.map((gift, i) => {
             const Icon = gift.icon;
             return (
               <motion.div
                 key={gift.title}
-                className="wedding-card gift-card group"
+                className="wedding-card text-center group hover:shadow-lg transition-shadow duration-500"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -107,7 +107,7 @@ const GiftSection = () => {
 
         <motion.div
           id="pix"
-          className="wedding-card pix-card"
+          className="wedding-card text-center max-w-md mx-auto"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

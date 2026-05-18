@@ -18,12 +18,6 @@ const HeroSection = () => {
           decoding="async"
         />
         <div className="hero-overlay" />
-        <div className="hero-vignette" />
-      </div>
-
-      <div className="hero-orbit" aria-hidden="true">
-        <span />
-        <span />
       </div>
 
       <div className="hero-content">
@@ -82,12 +76,6 @@ const HeroSection = () => {
             Dinâmica
           </a>
         </motion.div>
-      </div>
-
-      <div className="hero-signature" aria-hidden="true">
-        <span>L</span>
-        <i />
-        <span>M</span>
       </div>
     </section>
   );
