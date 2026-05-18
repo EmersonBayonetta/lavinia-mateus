@@ -715,6 +715,7 @@
 
   .music-control {
     @apply fixed z-40 inline-flex min-h-11 max-w-[calc(100vw-2rem)] items-center gap-2 rounded-full px-3 py-2 text-xs font-medium uppercase transition-all duration-300;
+    position: fixed;
     right: max(1rem, env(safe-area-inset-right));
     bottom: max(1rem, env(safe-area-inset-bottom));
     color: hsl(var(--foreground));
@@ -722,6 +723,19 @@
     border: 1px solid hsl(var(--rose-deep) / 0.24);
     box-shadow: 0 16px 38px hsl(var(--foreground) / 0.12);
     backdrop-filter: blur(8px);
+    overflow: hidden;
+    touch-action: manipulation;
+  }
+
+  .music-control::after {
+    content: "";
+    position: absolute;
+    inset: 0.22rem;
+    border-radius: inherit;
+    background: radial-gradient(circle at 22% 50%, hsl(var(--rose-deep) / 0.22), transparent 42%);
+    opacity: 0;
+    transform: scale(0.86);
+    transition: opacity 360ms ease, transform 520ms ease;
   }
 
   .music-control:hover {
@@ -729,14 +743,33 @@
     transform: translateY(-1px);
   }
 
+  .music-control:active,
+  .music-control-activating {
+    transform: translateY(1px) scale(0.985);
+  }
+
+  .music-control-activating::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+
   .music-control-icon {
     @apply flex h-8 w-8 items-center justify-center rounded-full;
+    position: relative;
+    z-index: 1;
     color: hsl(var(--primary-foreground));
     background: hsl(var(--rose-deep));
+    transition: transform 360ms ease, background 360ms ease;
+  }
+
+  .music-control-activating .music-control-icon {
+    transform: scale(1.08);
   }
 
   .music-control-copy {
     @apply hidden items-center gap-1.5 sm:inline-flex;
+    position: relative;
+    z-index: 1;
   }
 
   .music-control-text {

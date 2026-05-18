@@ -5,8 +5,6 @@ import {
   useState,
   type KeyboardEvent,
   type MouseEvent,
-  type PointerEvent,
-  type TouchEvent,
 } from "react";
 import { Music2, Volume2, VolumeX } from "lucide-react";
 
@@ -14,15 +12,13 @@ const musicSrc = "/wedding-music.mp3";
 
 const BackgroundMusic = () => {
   const [playing, setPlaying] = useState(false);
+  const [activating, setActivating] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const lastToggleRef = useRef(0);
 
   const playMusic = useCallback(async () => {
     const audio = audioRef.current;
 
     if (!audio) return false;
-
-    if (!audio.currentSrc) audio.load();
 
     audio.muted = false;
     audio.volume = 0.35;
@@ -62,6 +58,9 @@ const BackgroundMusic = () => {
 
     if (!audio) return;
 
+    setActivating(true);
+    window.setTimeout(() => setActivating(false), 520);
+
     if (!audio.paused) {
       audio.pause();
       setPlaying(false);
@@ -71,28 +70,9 @@ const BackgroundMusic = () => {
     await playMusic();
   };
 
-  const runUserToggle = () => {
-    const now = window.Date.now();
-
-    if (now - lastToggleRef.current < 450) return;
-
-    lastToggleRef.current = now;
-    void toggleMusic();
-  };
-
-  const handlePointerDown = (event: PointerEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    runUserToggle();
-  };
-
-  const handleTouchEnd = (event: TouchEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    runUserToggle();
-  };
-
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    runUserToggle();
+    void toggleMusic();
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
@@ -113,9 +93,7 @@ const BackgroundMusic = () => {
       </audio>
       <button
         type="button"
-        className={`music-control ${needsAction ? "music-control-attention" : ""}`}
-        onPointerDown={handlePointerDown}
-        onTouchEnd={handleTouchEnd}
+        className={`music-control ${needsAction ? "music-control-attention" : ""} ${activating ? "music-control-activating" : ""}`}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         aria-pressed={playing}
