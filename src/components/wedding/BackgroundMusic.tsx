@@ -14,7 +14,6 @@ const musicSrc = "/wedding-music.mp3";
 
 const BackgroundMusic = () => {
   const [playing, setPlaying] = useState(false);
-  const [autoplayBlocked, setAutoplayBlocked] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const lastToggleRef = useRef(0);
 
@@ -23,16 +22,16 @@ const BackgroundMusic = () => {
 
     if (!audio) return false;
 
+    if (!audio.currentSrc) audio.load();
+
     audio.muted = false;
     audio.volume = 0.35;
     audio.playsInline = true;
 
     try {
       await audio.play();
-      setAutoplayBlocked(false);
       return true;
     } catch {
-      setAutoplayBlocked(true);
       return false;
     }
   }, []);
@@ -45,7 +44,6 @@ const BackgroundMusic = () => {
     audio.volume = 0.35;
     audio.muted = false;
     audio.playsInline = true;
-    audio.load();
 
     const handlePlay = () => setPlaying(true);
     const handlePause = () => setPlaying(false);
@@ -53,30 +51,9 @@ const BackgroundMusic = () => {
     audio.addEventListener("play", handlePlay);
     audio.addEventListener("pause", handlePause);
 
-    void playMusic();
-
-    const unlockMusic = (event: Event) => {
-      const target = event.target;
-
-      if (target instanceof Element && target.closest(".music-control")) return;
-
-      void playMusic();
-    };
-
-    const unlockOptions: AddEventListenerOptions = { once: true, passive: true };
-
-    window.addEventListener("pointerdown", unlockMusic, unlockOptions);
-    window.addEventListener("touchstart", unlockMusic, unlockOptions);
-    window.addEventListener("scroll", unlockMusic, unlockOptions);
-    window.addEventListener("keydown", unlockMusic, { once: true });
-
     return () => {
       audio.removeEventListener("play", handlePlay);
       audio.removeEventListener("pause", handlePause);
-      window.removeEventListener("pointerdown", unlockMusic, unlockOptions);
-      window.removeEventListener("touchstart", unlockMusic, unlockOptions);
-      window.removeEventListener("scroll", unlockMusic, unlockOptions);
-      window.removeEventListener("keydown", unlockMusic);
     };
   }, [playMusic]);
 
@@ -125,13 +102,13 @@ const BackgroundMusic = () => {
     void toggleMusic();
   };
 
-  const needsAction = autoplayBlocked && !playing;
+  const needsAction = !playing;
   const iconPlaying = playing;
   const buttonLabel = needsAction ? "Aperte o play e entre no clima" : "Musica";
 
   return (
     <>
-      <audio ref={audioRef} autoPlay loop preload="auto" playsInline>
+      <audio ref={audioRef} loop preload="none" playsInline>
         <source src={musicSrc} type="audio/mpeg" />
       </audio>
       <button

@@ -21,10 +21,6 @@ const HeroSection = () => {
         <div className="hero-vignette" />
       </div>
 
-      <div className="hero-orbit" aria-hidden="true">
-        <span />
-        <span />
-      </div>
 
       <div className="hero-content">
         <motion.p

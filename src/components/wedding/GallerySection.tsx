@@ -1,20 +1,14 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import img1 from "@/assets/Imagem1.jpg";
-import img2 from "@/assets/Imagem2.jpg";
-import img3 from "@/assets/Imagem3.jpg";
-import img4 from "@/assets/Imagem4.jpg";
-import img5 from "@/assets/Imagem5.jpg";
-import img6 from "@/assets/Imagem6.jpg";
 
 const images = [
-  { src: img1, thumb: "/gallery/thumb-1.jpg", alt: "Foto do casamento 1" },
-  { src: img2, thumb: "/gallery/thumb-2.jpg", alt: "Foto do casamento 2" },
-  { src: img3, thumb: "/gallery/thumb-3.jpg", alt: "Foto do casamento 3" },
-  { src: img4, thumb: "/gallery/thumb-4.jpg", alt: "Foto do casamento 4" },
-  { src: img5, thumb: "/gallery/thumb-5.jpg", alt: "Foto do casamento 5" },
-  { src: img6, thumb: "/gallery/thumb-6.jpg", alt: "Foto do casamento 6" },
+  { src: "/gallery/view-1.jpg", thumb: "/gallery/thumb-1.jpg", alt: "Foto do casamento 1" },
+  { src: "/gallery/view-2.jpg", thumb: "/gallery/thumb-2.jpg", alt: "Foto do casamento 2" },
+  { src: "/gallery/view-3.jpg", thumb: "/gallery/thumb-3.jpg", alt: "Foto do casamento 3" },
+  { src: "/gallery/view-4.jpg", thumb: "/gallery/thumb-4.jpg", alt: "Foto do casamento 4" },
+  { src: "/gallery/view-5.jpg", thumb: "/gallery/thumb-5.jpg", alt: "Foto do casamento 5" },
+  { src: "/gallery/view-6.jpg", thumb: "/gallery/thumb-6.jpg", alt: "Foto do casamento 6" },
 ];
 
 const GallerySection = () => {
