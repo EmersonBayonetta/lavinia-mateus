@@ -30,8 +30,8 @@ const MessagesSection = () => {
   };
 
   return (
-    <section id="mensagens" className="wedding-section">
-      <div className="wedding-container max-w-4xl">
+    <section id="mensagens" className="wedding-section messages-section">
+      <div className="wedding-container messages-container">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
@@ -46,7 +46,7 @@ const MessagesSection = () => {
 
         <motion.form
           onSubmit={handleSubmit}
-          className="wedding-card mb-12 max-w-xl mx-auto"
+          className="wedding-card message-form"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -86,11 +86,11 @@ const MessagesSection = () => {
         </motion.form>
 
         {messages.length > 0 && (
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="message-grid">
             {messages.map((msg, i) => (
               <motion.div
                 key={`${msg.createdAt}-${i}`}
-                className="wedding-card relative"
+                className="wedding-card message-note"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.05 }}

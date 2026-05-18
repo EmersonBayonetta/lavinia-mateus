@@ -36,7 +36,7 @@ const milestones = [
 
 const StorySection = () => {
   return (
-    <section id="historia" className="wedding-section bg-cream/50">
+    <section id="historia" className="wedding-section story-section">
       <div className="wedding-container">
         <motion.div
           className="text-center mb-16"
@@ -50,9 +50,9 @@ const StorySection = () => {
           <p className="wedding-subtitle">Um amor contado em cenas, memórias e promessas</p>
         </motion.div>
 
-        <div className="relative">
+        <div className="story-timeline">
           <div
-            className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 hidden md:block"
+            className="story-line"
             style={{ background: "linear-gradient(to bottom, transparent, hsl(var(--rose-deep)), transparent)" }}
           />
 
@@ -62,27 +62,27 @@ const StorySection = () => {
             return (
               <motion.div
                 key={m.title}
-                className={`flex items-center mb-12 md:mb-16 ${isLeft ? "md:flex-row" : "md:flex-row-reverse"} flex-col`}
+                className={`story-milestone ${isLeft ? "story-milestone-left" : "story-milestone-right"}`}
                 initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: i * 0.1 }}
               >
-                <div className={`md:w-5/12 ${isLeft ? "md:text-right md:pr-12" : "md:text-left md:pl-12"} text-center`}>
+                <div className="story-copy">
                   <span className="text-xs uppercase text-gold font-sans">{m.date}</span>
                   <h3 className="font-serif text-2xl md:text-3xl font-light mt-2 text-foreground">{m.title}</h3>
-                  <p className={`mt-3 text-muted-foreground font-sans text-sm leading-relaxed max-w-sm mx-auto ${isLeft ? "md:ml-auto md:mr-0" : "md:ml-0 md:mr-auto"}`}>
+                  <p className="story-text">
                     {m.desc}
                   </p>
                 </div>
 
-                <div className="md:w-2/12 flex justify-center my-6 md:my-0">
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center border-2 border-rose-deep/30 bg-background">
+                <div className="story-icon-wrap">
+                  <div className="story-icon">
                     <Icon className="w-5 h-5 text-gold" />
                   </div>
                 </div>
 
-                <div className="md:w-5/12" />
+                <div className="story-breath" />
               </motion.div>
             );
           })}
