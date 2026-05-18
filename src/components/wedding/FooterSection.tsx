@@ -11,7 +11,7 @@ const FooterSection = () => {
   };
 
   return (
-    <footer className="wedding-section bg-cream/50 text-center">
+    <footer className="wedding-section footer-section text-center">
       <div className="wedding-container max-w-2xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

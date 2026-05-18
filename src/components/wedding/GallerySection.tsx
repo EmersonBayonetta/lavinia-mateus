@@ -9,12 +9,12 @@ import img5 from "@/assets/Imagem5.jpg";
 import img6 from "@/assets/Imagem6.jpg";
 
 const images = [
-  { src: img1, alt: "Foto do casamento 1" },
-  { src: img2, alt: "Foto do casamento 2" },
-  { src: img3, alt: "Foto do casamento 3" },
-  { src: img4, alt: "Foto do casamento 4" },
-  { src: img5, alt: "Foto do casamento 5" },
-  { src: img6, alt: "Foto do casamento 6" },
+  { src: img1, thumb: "/gallery/thumb-1.jpg", alt: "Foto do casamento 1" },
+  { src: img2, thumb: "/gallery/thumb-2.jpg", alt: "Foto do casamento 2" },
+  { src: img3, thumb: "/gallery/thumb-3.jpg", alt: "Foto do casamento 3" },
+  { src: img4, thumb: "/gallery/thumb-4.jpg", alt: "Foto do casamento 4" },
+  { src: img5, thumb: "/gallery/thumb-5.jpg", alt: "Foto do casamento 5" },
+  { src: img6, thumb: "/gallery/thumb-6.jpg", alt: "Foto do casamento 6" },
 ];
 
 const GallerySection = () => {
@@ -35,11 +35,11 @@ const GallerySection = () => {
           <p className="wedding-subtitle">Momentos que guardamos com carinho</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 auto-rows-[180px] sm:auto-rows-[240px] lg:auto-rows-[300px]">
+        <div className="gallery-grid">
           {images.map((img, i) => (
             <motion.div
               key={img.src}
-              className="relative overflow-hidden rounded-lg cursor-pointer group"
+              className="gallery-frame"
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -47,12 +47,14 @@ const GallerySection = () => {
               onClick={() => setSelected(img.src)}
             >
               <img
-                src={img.src}
+                src={img.thumb}
                 alt={img.alt}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                className="gallery-image"
+                decoding="async"
                 loading="lazy"
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
               />
-              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-500" />
+              <div className="gallery-wash" />
             </motion.div>
           ))}
         </div>

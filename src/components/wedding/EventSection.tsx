@@ -20,9 +20,9 @@ const EventSection = () => {
           <p className="wedding-subtitle">Cerimônia e dress code para viver esse momento com carinho</p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="event-grid">
           <motion.div
-            className="wedding-card text-center"
+            className="wedding-card event-card event-card-main"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -51,7 +51,7 @@ const EventSection = () => {
           </motion.div>
 
           <motion.div
-            className="wedding-card text-center"
+            className="wedding-card event-card event-card-dress"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
